@@ -1,0 +1,28 @@
+<style>
+.blank_row
+{
+height: 15px !important;
+background-color: #FFFFFF;
+}
+</style>
+
+<html><body>
+<h1>Employees</h1>
+<ul>
+    <table style="width:40%">
+        <tr>
+            <td> ID</td>>
+            <td> First Name</td>>
+            <td> Last Name</td>>
+        </tr>
+        <tr class="blank_row"> <td colspan="3"></td> </tr>
+        {% for profile in profiles %}
+        <tr>
+            <td>{{ profile.id}}</td>
+            <td>{{ profile.first_name }}</td>
+            <td>{{ profile.last_name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</ul>
+</body></html>
