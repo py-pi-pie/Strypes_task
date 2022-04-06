@@ -4,6 +4,9 @@
 height: 15px !important;
 background-color: #FFFFFF;
 }
+td {
+    padding: 0 10px;
+  }
 </style>
 
 <html><body>
@@ -13,14 +16,25 @@ background-color: #FFFFFF;
         <tr>
             <td> ID</td>>
             <td> First Name</td>>
-            <td> Last Name</td>>
+            <td> Last Name</td>
+            <td> Mobile</td>>
+            <td> Start Date Name</td>>
+            <td> Position</td>>
+            <td> Position</td>>
+            <td> Employee ID</td>>
+
         </tr>
-        <tr class="blank_row"> <td colspan="3"></td> </tr>
+        <tr class="blank_row"> <td></td> </tr>
         {% for profile in profiles %}
         <tr>
             <td>{{ profile.id}}</td>
             <td>{{ profile.first_name }}</td>
             <td>{{ profile.last_name }}</td>
+            <td>{{ profile.mobile_num }}</td>
+            <td>{{ profile.start_date }}</td>
+            <td>{{ profile.position }}</td>
+            <td>{{ profile.salary }}</td>
+            <td>{{ profile.employee_id }}</td>
         </tr>
         {% endfor %}
     </table>

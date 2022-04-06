@@ -26,7 +26,7 @@ class Employee(models.Model):
 
     first_name = models.CharField(max_length=256)
     last_name = models.CharField(max_length=256)
-    mobile_num = models.CharField(max_length=9)
+    mobile_num = models.IntegerField()
     start_date = models.DateField()
     position = models.CharField(
         max_length=100,
