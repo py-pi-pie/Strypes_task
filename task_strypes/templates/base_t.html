@@ -1,16 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
     <title>Strypes Task</title>
 </head>
 <body>
-    <header>
+<header>
+    <h1><a href="{% url 'home' %}">Home Page</a></h1>
+</header>
 
-    </header>
-
+<div>
     {% block content %}
     {% endblock content %}
-
+</div>
 </body>
 </html>

@@ -18,6 +18,15 @@ from django.urls import reverse
 
 MOBILE_REGEX = re.compile(r'\d+')
 
+
+class Home(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'home_page.html'
+
+    def get(self, request):
+        return Response(status=status.HTTP_200_OK)
+
+
 class EmployeesApi(APIView):
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'all_employees.html'

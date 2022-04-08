@@ -9,8 +9,10 @@ td {
   }
 </style>
 
-<html><body>
-<h1>Employees</h1>
+{% extends 'base_t.html' %}
+{% block content %}
+
+<h1>All Employees</h1>
 <ul>
     <table style="width:40%">
         <tr>
@@ -39,4 +41,5 @@ td {
         {% endfor %}
     </table>
 </ul>
-</body></html>
+
+{% endblock content %}

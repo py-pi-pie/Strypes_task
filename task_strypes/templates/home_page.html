@@ -1,0 +1,10 @@
+
+{% extends 'base_t.html' %}
+{% block content %}
+<h1>Welcome to task Project </h1> <br><br><br>
+<p><a href="{% url 'employees' %}">Get all Employees from the DB</a></p>
+<p><a href="{% url 'upload_file' %}">Upload XLSX File</a></p>
+<p><a href="{% url 'add_employee' %}">Add Employee to DB</a></p>
+<p><a href="{% url 'edit_employee' %}">Add Employee to DB</a></p>
+
+{% endblock content %}
