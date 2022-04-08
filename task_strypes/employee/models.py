@@ -26,7 +26,7 @@ class Employee(models.Model):
 
     first_name = models.CharField(max_length=256)
     last_name = models.CharField(max_length=256)
-    mobile_num = models.IntegerField(unique=True)
+    mobile_num = models.PositiveIntegerField(unique=True,)
     start_date = models.DateField()
     position = models.CharField(
         max_length=100,
@@ -35,7 +35,7 @@ class Employee(models.Model):
         help_text="Job position taken",
     )
 
-    salary = models.IntegerField(default=0)
+    salary = models.PositiveIntegerField(default=0)
     employee_id = models.CharField(max_length=10, unique=True)
 
     def __str__(self):

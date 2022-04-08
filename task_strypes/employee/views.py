@@ -6,7 +6,7 @@ from openpyxl import load_workbook
 from io import BytesIO
 from datetime import datetime
 
-
+from django.views.generic.edit import CreateView
 from django.http import HttpResponse
 import os
 
@@ -37,7 +37,6 @@ class UploadXLSX(APIView):
         salary = serializers.IntegerField()
         employee_id = serializers.CharField()
 
-
     def get(self, request):
         return Response()
 
@@ -65,16 +64,16 @@ class UploadXLSX(APIView):
                 )
                 n += 1
 
-            POSITION_FIELD_REPRESENTATION = {'CEO': 'CEO', 'Junior Developer': 'junior_dev',
-                                             'Senior Developer': 'senior_dev', 'Team Lead': 'team_lead',
-                                             'Project Manager': 'project_manager' }
+            POSITION_FIELD_REPRESENTATION = {'ceo': 'CEO', 'junior developer': 'junior_dev',
+                                             'senior developer': 'senior_dev', 'team lead': 'team_lead',
+                                             'project manager': 'project_manager'}
             for i in employees:
                 if type(i.get('start_date')) == str:
                     formatted_date = datetime.strptime(i.get('start_date'), '%d/%m/%Y').date()
                 else:
                     formatted_date = i.get('start_date').date()
 
-                position_db_represented = POSITION_FIELD_REPRESENTATION.get(i.get('position'))
+                position_db_represented = POSITION_FIELD_REPRESENTATION.get(i.get('position').lower())
 
                 salary_extracted = int(re.search(MOBILE_REGEX, i.get('salary')).group(0))
 
@@ -107,23 +106,65 @@ class UploadXLSX(APIView):
         import pdb; pdb.set_trace()
 
 
+class AddEmployee(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'base_t.html'
+
+    class EmployeeSerializer(serializers.Serializer):       # DRY principle
+        first_name = serializers.CharField()
+        last_name = serializers.CharField()
+        mobile_num = serializers.IntegerField()
+        start_date = serializers.DateField()
+        position = serializers.CharField()
+        salary = serializers.IntegerField()
+        employee_id = serializers.CharField()
+
+    def get(self, request):
+        return Response()
+
+    def post(self, request):
+        # DRY
+        POSITION_FIELD_REPRESENTATION = {'ceo': 'CEO', 'junior developer': 'junior_dev',
+                                         'senior developer': 'senior_dev', 'team lead': 'team_lead',
+                                         'project manager': 'project_manager'}
+
+        employee = {'first_name': request.data.get('first_name'),
+                    'last_name': request.data.get('last_name'),
+                    'mobile_num': int(request.data.get('mobile_num')),
+                    'start_date': datetime.strptime(request.data.get('start_date'), '%Y-%m-%d').date(),
+                    'position': POSITION_FIELD_REPRESENTATION.get(request.data.get('position').lower()),
+                    'salary': int(request.data.get('salary')),
+                    'employee_id': request.data.get('employee_id'),
+                    }
+
+        serializer_employees = self.EmployeeSerializer(data=employee)
+
+        if serializer_employees.is_valid():
+            Employee.objects.create(first_name=employee.get('first_name'),
+                                    last_name=employee.get('last_name'),
+                                    mobile_num=employee.get('mobile_num'),
+                                    start_date=employee.get('start_date'),
+                                    position=employee.get('position'),
+                                    salary=employee.get('salary'),
+                                    employee_id=employee.get('employee_id'),
+                                    )
 
 
+class EditEmployee(APIView):
+    renderer_classes = [TemplateHTMLRenderer]
+    template_name = 'base_t.html'
 
+    def post(self, request):
+        # DRY
+        POSITION_FIELD_REPRESENTATION = {'ceo': 'CEO', 'junior developer': 'junior_dev',
+                                         'senior developer': 'senior_dev', 'team lead': 'team_lead',
+                                         'project manager': 'project_manager'}
 
-def homePageView(request):
-    import pdb
-    return HttpResponse(f'{os.path.dirname(os.path.dirname(os.path.abspath(__file__)))}')
-
-
-def simple_upload(request):
-    import pdb; pdb.set_trace()
-    # if request.method == 'POST' and request.FILES['myfile']:
-    #     myfile = request.FILES['myfile']
-    #     fs = FileSystemStorage()
-    #     filename = fs.save(myfile.name, myfile)
-    #     uploaded_file_url = fs.url(filename)
-    #     return render(request, 'core/simple_upload.html', {
-    #         'uploaded_file_url': uploaded_file_url
-    #     })
-    # return render(request, 'core/simple_upload.html')
+        employee = {'first_name': request.data.get('first_name'),
+                    'last_name': request.data.get('last_name'),
+                    'mobile_num': int(request.data.get('mobile_num')),
+                    'start_date': datetime.strptime(request.data.get('start_date'), '%Y-%m-%d').date(),
+                    'position': POSITION_FIELD_REPRESENTATION.get(request.data.get('position').lower()),
+                    'salary': int(request.data.get('salary')),
+                    'employee_id': request.data.get('employee_id'),
+                    }

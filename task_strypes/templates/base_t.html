@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Strypes Task</title>
+</head>
+<body>
+    <header>
+        <form action="" method="post">{% csrf_token %}
+            <label for="First_name">First name: </label>
+            <input id="First_name" type="text" name="first_name" value="{{ first_name }}">
+            <br><br>
+
+            <label for="Last_name">Last name: </label>
+            <input id="Last_name" type="text" name="last_name" value="{{ last_name }}">
+            <br><br>
+
+            <label for="Mobile">Mobile Number: </label>
+            <input id="Mobile" type="number" name="mobile_num" value="{{ mobile_num }}">
+            <br><br>
+
+            <label for="Start_date">Start Date: </label>
+            <input id="Start_date" type="date" name="start_date" value="{{ start_date }}">
+            <br><br>
+
+            <label for="Position">Position: </label>
+            <input id="Position" type="text" name="position" value="{{ position }}">
+            <br><br>
+
+            <label for="Salary">Salary: </label>
+            <input id="Salary" type="number" name="salary" value="{{ salary }}">
+            <br><br>
+
+            <label for="Employee_id">Employee ID: </label>
+            <input id="Employee_id" type="text" name="employee_id" value="{{ employee_id }}">
+            <br><br>
+
+            <input type="submit" value="Save" />
+        </form>
+        <br><br><br><br><br><br><br><br><br><br>
+
+        <form action="" method="put">{% csrf_token %}
+            <label for="First_name_p">First name: </label>
+            <input id="First_name_p" type="text" name="first_name" value="{{ first_name }}">
+
+            <br><br>
+
+            <input type="submit" value="Save" />
+        </form>
+
+
+    </header>
+
+    {% block content %}
+    {% endblock content %}
+
+</body>
+</html>
