@@ -21,12 +21,12 @@ class Employee(models.Model):
         (TYPE_SENIOR, 'Senior Developer'),
         (TYPE_MANAGER, 'Project Manager'),
         (TYPE_LEAD, 'Team Lead'),
-        (TYPE_EMPLOYEE, 'Employee'),
+        (TYPE_EMPLOYEE, 'Employee'),    # Default position, could be left empty in the DB
     )
 
     first_name = models.CharField(max_length=256)
     last_name = models.CharField(max_length=256)
-    mobile_num = models.IntegerField()
+    mobile_num = models.IntegerField(unique=True)
     start_date = models.DateField()
     position = models.CharField(
         max_length=100,
@@ -36,7 +36,7 @@ class Employee(models.Model):
     )
 
     salary = models.IntegerField(default=0)
-    employee_id = models.CharField(max_length=10)
+    employee_id = models.CharField(max_length=10, unique=True)
 
     def __str__(self):
         return f'Employee Name: {self.first_name} {self.last_name}'
