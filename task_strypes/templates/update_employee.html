@@ -1,6 +1,16 @@
 {% block content %}
 
+<h1>Update Employee</h1>
+
 <form action="" method="post">{% csrf_token %}
+    <br><br>
+    <p> Please write the employee's id you want to update and the data to update
+        <br>
+    <label for="Employee_id_to_update">Employee ID to Update: </label>
+    <input id="Employee_id_to_update" type="text" name="id_to_update" value="{{ id_to_update }}">
+    <br><br> <br><br>
+
+
     <label for="First_name">First name: </label>
     <input id="First_name" type="text" name="first_name" value="{{ first_name }}">
     <br><br>
