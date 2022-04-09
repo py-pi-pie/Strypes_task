@@ -51,7 +51,7 @@ class EmployeesApiTestCase(TestCase):
         self.assertTrue(get_response.data.get('profiles')[0].employee_id == 'S-12345')
 
 
-class UploadXLSX(TestCase):
+class UploadXLSXTestCase(TestCase):
 
     def setUp(self) -> None:
 
@@ -67,7 +67,7 @@ class UploadXLSX(TestCase):
 
         self.assertEqual(post_response.status_code, status.HTTP_201_CREATED)
 
-    def test_post_method_wrong_file_format(self):
+    def test_wrong_file_format(self):
         with open(self.xlsx_file, 'rb') as fp:
             fio = io.FileIO(fp.fileno())
             fio.name = 'table_emp.pdf'
@@ -75,12 +75,55 @@ class UploadXLSX(TestCase):
 
         self.assertEqual(post_response.status_code, status.HTTP_400_BAD_REQUEST)
 
-    def test_post_method_no_file_upload(self):
+    def test_no_file_upload(self):
         fio = ''
         post_response = self.client.post(reverse('upload_file'), {'file_xlsx': fio, 'extraparameter': 5})
 
         self.assertEqual(post_response.status_code, status.HTTP_400_BAD_REQUEST)
 
 
+class AddEmployeeTestCase(TestCase):
+
+    def setUp(self) -> None:
+
+        self.client = APIClient()
+        self.client.login(username='admin', password='strypes')
+
+    def test_add_employee(self):
+        data = {'first_name': 'Mia', 'last_name': 'Kalinova', 'mobile_num': '098765345', 'start_date': '2021-11-19',
+                'position': 'CEO', 'salary': '2500', 'employee_id': 'S-23654'
+                }
+        post_response = self.client.post(reverse('add_employee'), data)
+
+        self.assertEqual(post_response.status_code, status.HTTP_201_CREATED)
 
 
+class UpdateEmployeeTestCase(TestCase):
+
+    def setUp(self) -> None:
+        self.employee = EmployeeFactory(first_name='Peter',
+                                        last_name='Petrov',
+                                        mobile_num='098675675',
+                                        start_date=datetime.datetime.now().date(),
+                                        position='CEO',
+                                        salary='1000',
+                                        employee_id='S-12345')
+
+        self.client = APIClient()
+        self.client.login(username='admin', password='strypes')
+
+    def test_update_employee(self):
+        data = {'id_to_update': 'S-12345', 'first_name': 'Mia', 'last_name': 'Kalinova', 'start_date': '2021-11-19',
+                'salary': '2500',
+                }
+        post_response = self.client.post(reverse('edit_employee'), data)
+
+        self.assertEqual(post_response.status_code, status.HTTP_201_CREATED)
+
+    def test_update_employee_not_found(self):
+        data = {'id_to_update': 'S-56563', 'first_name': 'Mia', 'last_name': 'Kalinova', 'start_date': '2021-11-19',
+                'salary': '2500',
+                }
+        post_response = self.client.post(reverse('edit_employee'), data)
+
+        self.assertEqual(post_response.status_code, status.HTTP_404_NOT_FOUND)
