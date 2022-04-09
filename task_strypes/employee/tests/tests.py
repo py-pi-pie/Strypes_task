@@ -8,15 +8,6 @@ from django.conf import settings
 import io
 
 
-# employee = EmployeeFactory(first_name='Sasho',
-#                            last_name='Roman',
-#                            mobile_num='098675675',
-#                            start_date=datetime.datetime.now().date(),
-#                            position='CEO',
-#                            salary='1000',
-#                            employee_id='S-12345')
-
-
 class HomeViewTestCase(TestCase):
 
     def setUp(self) -> None:
