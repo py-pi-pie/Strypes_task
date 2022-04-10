@@ -66,7 +66,12 @@ class UploadXLSX(APIView):
 
                 if serializer_employees.is_valid():
                     table_entries = serializer_employees.data
-                    bulk_create_employees(table_entries)
+                    try:
+                        bulk_create_employees(table_entries)
+                    except Exception as e:
+                        message = f'DB data inconsistency  {e}\n ' \
+                                  f'<p><a href="{reverse("home")}">Home Page</a></p>'
+                        return HttpResponse(message, status=status.HTTP_400_BAD_REQUEST)
 
                     message = 'Bulk data has been uploaded to db Successfully \n ' \
                               f'<p><a href="{reverse("home")}">Home Page</a></p>'
@@ -89,17 +94,25 @@ class AddEmployee(APIView):
 
         employee = {'first_name': request.data.get('first_name'),
                     'last_name': request.data.get('last_name'),
-                    'mobile_num': int(request.data.get('mobile_num')),
-                    'start_date': datetime.strptime(request.data.get('start_date'), '%Y-%m-%d').date(),
-                    'position': POSITION_FIELD_REPRESENTATION.get(request.data.get('position').lower()),
-                    'salary': int(request.data.get('salary')),
+                    'mobile_num': int(request.data.get('mobile_num')) if request.data.get('mobile_num') else 0,
+                    'start_date': datetime.strptime(request.data.get('start_date'),
+                                                    '%Y-%m-%d').date() if request.data.get(
+                        'start_date') else datetime.now().date(),
+                    'position': POSITION_FIELD_REPRESENTATION.get(
+                        request.data.get('position').lower()) if request.data.get('position') else 'Employee',
+                    'salary': int(request.data.get('salary')) if request.data.get('salary') else 0,
                     'employee_id': request.data.get('employee_id'),
                     }
 
         serializer_employees = self.employee_serializer(data=employee)
 
         if serializer_employees.is_valid():
-            create_employee(employee)
+            try:
+                create_employee(employee)
+            except Exception as e:
+                message = f'DB data inconsistency  {e}\n ' \
+                          f'<p><a href="{reverse("home")}">Home Page</a></p>'
+                return HttpResponse(message, status=status.HTTP_400_BAD_REQUEST)
 
             message = 'Employee has been created Successfully \n ' \
                       f'<p><a href="{reverse("home")}">Home Page</a></p>'
@@ -125,7 +138,12 @@ class EditEmployee(APIView):
             serializer_employees = self.employee_serializer(data=employee)
 
             if serializer_employees.is_valid():
-                update_employee(employee_to_update_set, employee)
+                try:
+                    update_employee(employee_to_update_set, employee)
+                except Exception as e:
+                    message = f'DB data inconsistency  {e}\n ' \
+                              f'<p><a href="{reverse("home")}">Home Page</a></p>'
+                    return HttpResponse(message, status=status.HTTP_400_BAD_REQUEST)
 
                 message = f'Employee with ID {request.data.get("id_to_update")} has been updated \n ' \
                           f'<p><a href="{reverse("home")}">Home Page</a></p>'
