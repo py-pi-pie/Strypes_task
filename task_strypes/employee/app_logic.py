@@ -1,9 +1,10 @@
-from openpyxl import load_workbook
-from io import BytesIO
-
-from datetime import datetime
 import re
+from io import BytesIO
+from datetime import datetime
+from openpyxl import load_workbook
+
 from django.http import HttpRequest
+
 from employee.models import Employee
 
 MOBILE_REGEX = re.compile(r'\d+')
@@ -54,7 +55,7 @@ def format_start_date_field(employee: dict) -> datetime:
     return formatted_date
 
 
-def format_ws_fields(employees: dict) -> None:
+def format_ws_fields(employees: list) -> None:
     """
     Fixes the formats of  start_date, salary and  position fields
     """

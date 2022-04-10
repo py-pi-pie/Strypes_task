@@ -1,15 +1,14 @@
+from datetime import datetime
+
+from django.http import HttpResponseBadRequest, HttpResponse
+from django.urls import reverse
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
 from rest_framework.response import Response
 
-from datetime import datetime
 from employee.models import Employee
-
-from django.http import HttpResponseBadRequest, HttpResponse
-from django.urls import reverse
 from employee.serializers import EmployeeSerializer
-
 from employee.app_logic import read_xlsx_from_memory, get_data_from_xlsx_sheet, format_ws_fields, create_update_data
 from employee.daos import bulk_create_employees, create_employee, update_employee
 

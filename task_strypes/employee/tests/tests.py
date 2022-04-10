@@ -1,11 +1,13 @@
+import io
+import datetime
+
 from django.test import TestCase
-from employee.tests.factories import EmployeeFactory
 from rest_framework.test import APIClient
 from django.urls import reverse
-import datetime
 from rest_framework import status
 from django.conf import settings
-import io
+
+from employee.tests.factories import EmployeeFactory
 
 
 class HomeViewTestCase(TestCase):

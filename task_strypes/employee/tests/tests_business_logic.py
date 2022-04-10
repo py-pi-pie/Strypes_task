@@ -1,13 +1,13 @@
+from datetime import datetime
+from unittest.mock import MagicMock
+from copy import deepcopy
+
 from django.test import TestCase
 from django.conf import settings
+
 from employee.app_logic import read_xlsx_from_memory, get_data_from_xlsx_sheet, format_start_date_field, \
     format_ws_fields, create_update_data
-from unittest.mock import MagicMock
-from datetime import datetime
-
 from employee.tests.static_test_data import WS_DATA, FORMATED_WS_DATA, UPDATED_USER_DATA
-
-from copy import deepcopy
 from employee.tests.factories import EmployeeFactory
 
 

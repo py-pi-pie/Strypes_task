@@ -1,8 +1,9 @@
-from django.test import TestCase
-from employee.tests.factories import EmployeeFactory
 from datetime import datetime
 
+from django.test import TestCase
 from django.core.exceptions import ValidationError
+
+from employee.tests.factories import EmployeeFactory
 
 
 class DBTestCase(TestCase):
