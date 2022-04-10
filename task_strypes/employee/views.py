@@ -22,6 +22,8 @@ POSITION_FIELD_REPRESENTATION_TABLE = {'ceo': 'CEO', 'junior_dev': 'Junior Devel
                                        'senior_dev': 'Senior Developer', 'team_lead': 'Team Lead',
                                        'project_manager': 'Project Manager'}
 
+POSITION_CONSTANT = ['ceo', 'junior_dev', 'senior_dev', 'team_lead', 'project_manager']
+
 
 class Home(APIView):
     """
@@ -115,8 +117,8 @@ class AddEmployee(APIView):
                     'start_date': datetime.strptime(request.data.get('start_date'),
                                                     '%Y-%m-%d').date() if request.data.get(
                         'start_date') else datetime.now().date(),
-                    'position': POSITION_FIELD_REPRESENTATION.get(
-                        request.data.get('position').lower()) if request.data.get('position') else 'Employee',
+                    'position': POSITION_FIELD_REPRESENTATION.get(request.data.get('position').lower())
+                    if request.data.get('position').lower() in POSITION_CONSTANT else 'Employee',
                     'salary': int(request.data.get('salary')) if request.data.get('salary') else 0,
                     'employee_id': request.data.get('employee_id'),
                     }
