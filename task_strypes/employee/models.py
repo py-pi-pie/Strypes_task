@@ -24,12 +24,12 @@ class Employee(models.Model):
         (TYPE_EMPLOYEE, 'Employee'),    # Default position, could be left empty in the DB
     )
 
-    first_name = models.CharField(max_length=256)
-    last_name = models.CharField(max_length=256)
+    first_name = models.CharField(max_length=120)
+    last_name = models.CharField(max_length=120)
     mobile_num = models.PositiveIntegerField()
     start_date = models.DateField()
     position = models.CharField(
-        max_length=100,
+        max_length=20,
         choices=POSITION_TYPES,
         default=TYPE_EMPLOYEE,
         help_text="Job position taken",
