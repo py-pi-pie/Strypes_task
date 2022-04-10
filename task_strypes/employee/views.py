@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.http import HttpResponseBadRequest, HttpResponse
 from django.urls import reverse
+from django.shortcuts import redirect
 from rest_framework.views import APIView
 from rest_framework import status
 from rest_framework.renderers import TemplateHTMLRenderer
@@ -173,3 +174,6 @@ class EditEmployee(APIView):
                   f''f'<p><a href="{reverse("home")}">Home Page</a></p>'
         return HttpResponseBadRequest(message, status=status.HTTP_404_NOT_FOUND)
 
+
+def view_404(request, exception=None):
+    return redirect(reverse("home"))

@@ -22,3 +22,4 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^employee/', include(employee_patterns))
 ]
+handler404 = 'employee.views.view_404'
