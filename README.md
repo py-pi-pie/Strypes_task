@@ -15,6 +15,6 @@ Partial or full update of the fields can be done.
 # Unit Tests
 - To run the Unit tests use "python3 manage.py test"
 
-
-
-    
+# Django admin
+Username: Admin  
+Password: strypes
