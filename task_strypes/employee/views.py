@@ -178,4 +178,8 @@ class EditEmployee(APIView):
 
 
 def view_404(request, exception=None):
+    """
+    All 404 http requests from the server will
+    be redirected to the home page
+    """
     return redirect(reverse("home"))
