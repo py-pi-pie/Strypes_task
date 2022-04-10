@@ -3,7 +3,7 @@ from django.db import models
 
 class Employee(models.Model):
     """
-    Represents the table that holds all the .....
+    Represents the table that holds all the Employee's data
     """
 
     TYPE_CEO = 'CEO'

@@ -24,6 +24,10 @@ POSITION_FIELD_REPRESENTATION_TABLE = {'ceo': 'CEO', 'junior_dev': 'Junior Devel
 
 
 class Home(APIView):
+    """
+    Home Page View
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'home_page.html'
 
@@ -32,6 +36,10 @@ class Home(APIView):
 
 
 class EmployeesApi(APIView):
+    """
+    Get All Employees from the DB
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'all_employees.html'
 
@@ -46,6 +54,11 @@ class EmployeesApi(APIView):
 
 
 class UploadXLSX(APIView):
+    """
+    Parse xlsx File View
+    Uploads the File data to DB
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'file_upload.html'
     employee_serializer = EmployeeSerializer
@@ -83,6 +96,10 @@ class UploadXLSX(APIView):
 
 
 class AddEmployee(APIView):
+    """
+    Add Employee to DB View
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'create_employee.html'
     employee_serializer = EmployeeSerializer
@@ -120,6 +137,10 @@ class AddEmployee(APIView):
 
 
 class EditEmployee(APIView):
+    """
+    Edit existing employee View
+    """
+
     renderer_classes = [TemplateHTMLRenderer]
     template_name = 'update_employee.html'
     employee_serializer = EmployeeSerializer

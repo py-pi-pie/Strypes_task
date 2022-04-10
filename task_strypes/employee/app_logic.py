@@ -3,6 +3,8 @@ from io import BytesIO
 
 from datetime import datetime
 import re
+from django.http import HttpRequest
+from employee.models import Employee
 
 MOBILE_REGEX = re.compile(r'\d+')
 POSITION_FIELD_REPRESENTATION = {'ceo': 'CEO', 'junior developer': 'junior_dev',
@@ -10,14 +12,20 @@ POSITION_FIELD_REPRESENTATION = {'ceo': 'CEO', 'junior developer': 'junior_dev',
                                  'project manager': 'project_manager'}
 
 
-def read_xlsx_from_memory(xlsx_file):
+def read_xlsx_from_memory(xlsx_file: HttpRequest) -> load_workbook:
+    """
+    Read the xlsx file from memory
+    """
     file_in_memory = xlsx_file.FILES['file_xlsx'].read()
     wb = load_workbook(filename=BytesIO(file_in_memory))
     ws = wb.active
     return ws
 
 
-def get_data_from_xlsx_sheet(ws):
+def get_data_from_xlsx_sheet(ws: load_workbook) -> list:
+    """
+    Converts the xlsx worksheet in data structure
+    """
     employees = []
     row = 2
     columns = ['first_name', 'last_name', 'mobile_num', 'start_date', 'position', 'salary', 'employee_id']
@@ -34,7 +42,10 @@ def get_data_from_xlsx_sheet(ws):
     return employees
 
 
-def format_start_date_field(employee):
+def format_start_date_field(employee: dict) -> datetime:
+    """
+    Correctly format date
+    """
     if type(employee.get('start_date')) == str:
         formatted_date = datetime.strptime(employee.get('start_date'), '%d/%m/%Y').date()
     else:
@@ -43,7 +54,10 @@ def format_start_date_field(employee):
     return formatted_date
 
 
-def format_ws_fields(employees):
+def format_ws_fields(employees: dict) -> None:
+    """
+    Fixes the formats of  start_date, salary and  position fields
+    """
     for employee in employees:
         formatted_date_filed = format_start_date_field(employee)
         formatted_position_field = POSITION_FIELD_REPRESENTATION.get(employee.get('position').lower())
@@ -55,7 +69,10 @@ def format_ws_fields(employees):
                         )
 
 
-def create_update_data(request, employee_to_update):
+def create_update_data(request: HttpRequest, employee_to_update: Employee) -> dict:
+    """
+    Creates data structure for employee update
+    """
     first_name = request.data.get('first_name') \
         if request.data.get('first_name') else employee_to_update.first_name
     last_name = request.data.get('last_name') \
