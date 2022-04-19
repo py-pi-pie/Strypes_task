@@ -1,7 +1,7 @@
 import datetime
 
 UPDATED_USER_DATA = {'first_name': 'Dimitar', 'last_name': 'Berbatov', 'mobile_num': '098675675',
-                     'start_date': datetime.date(2022, 4, 10), 'position': 'CEO', 'salary': '1000',
+                     'start_date': datetime.datetime.now().date(), 'position': 'CEO', 'salary': '1000',
                      'employee_id': 'S-12345'}
 
 WS_DATA = [{'first_name': 'John', 'last_name': 'Smith', 'mobile_num': 811123456.0,

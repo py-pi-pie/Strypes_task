@@ -22,7 +22,7 @@ POSITION_FIELD_REPRESENTATION_TABLE = {'ceo': 'CEO', 'junior_dev': 'Junior Devel
                                        'senior_dev': 'Senior Developer', 'team_lead': 'Team Lead',
                                        'project_manager': 'Project Manager'}
 
-POSITION_CONSTANT = ['ceo', 'junior_dev', 'senior_dev', 'team_lead', 'project_manager']
+POSITION_CONSTANT = ['ceo', 'junior developer', 'senior developer', 'team lead', 'project manager']
 
 
 class Home(APIView):
